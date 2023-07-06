@@ -10,7 +10,7 @@ public struct Logger {
         self.showLabel = showLabel
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     }
-    
+
     public func debug(_ message: String) {
         let date = dateFormatter.string(from: Date.now)
         var context = date
