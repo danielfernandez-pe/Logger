@@ -14,7 +14,7 @@ public struct Logger {
     public func debug(_ message: String) {
         let date = dateFormatter.string(from: Date.now)
         var context = date
-        
+
         if showLabel {
             context += " \(label)"
         }
