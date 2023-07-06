@@ -18,7 +18,7 @@ public struct Logger {
         if showLabel {
             context += " \(label)"
         }
-        
+
         #if DEBUG
         print("\(context) 🍕 [DEBUG] \(message)")
         #endif
