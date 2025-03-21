@@ -77,6 +77,6 @@ extension Logger: Logging {
         }
     }
 
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static let subsystem = Bundle.main.bundleIdentifier!
     public static let main = Logger(subsystem: subsystem, category: "main")
 }
