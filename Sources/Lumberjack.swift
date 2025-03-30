@@ -35,11 +35,11 @@ public struct LogInfo {
     }
 }
 
-public protocol Logging {
+public protocol Logging: Sendable {
     func log(logInfo: LogInfo)
 }
 
-public struct LumberjackCoordinator {
+public struct LumberjackCoordinator: Sendable {
     var loggers: [any Logging]
 
     public init(loggers: [any Logging]) {
