@@ -1,11 +1,11 @@
 import Foundation
 import OSLog
 
-public enum LogLevel {
-    case debug
-    case info
-    case warning
-    case error
+public enum LogLevel: Int, Comparable {
+    case debug = 0
+    case info = 1
+    case warning = 2
+    case error = 3
 
     var icon: String {
         switch self {
@@ -18,6 +18,10 @@ public enum LogLevel {
         case .error:
             return "🚨"
         }
+    }
+    
+    public static func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
 
@@ -36,6 +40,8 @@ public struct LogInfo {
 }
 
 public protocol Logging: Sendable {
+    var minLevel: LogLevel { get }
+    
     func log(logInfo: LogInfo)
 }
 
@@ -47,23 +53,34 @@ public struct LumberjackCoordinator: Sendable {
     }
 
     public func debug(_ message: String) {
-        loggers.forEach { $0.log(logInfo: .init(logLevel: .debug, message: message)) }
+        log(level: .debug, message: message)
     }
 
     public func info(_ message: String) {
-        loggers.forEach { $0.log(logInfo: .init(logLevel: .info, message: message)) }
+        log(level: .info, message: message)
     }
 
     public func warning(_ message: String) {
-        loggers.forEach { $0.log(logInfo: .init(logLevel: .warning, message: message)) }
+        log(level: .warning, message: message)
     }
 
     public func error(_ message: String) {
-        loggers.forEach { $0.log(logInfo: .init(logLevel: .error, message: message)) }
+        log(level: .error, message: message)
+    }
+    
+    private func log(level: LogLevel, message: String) {
+        let logInfo = LogInfo(logLevel: level, message: message)
+        loggers.forEach { logger in
+            if level >= logger.minLevel {
+                logger.log(logInfo: logInfo)
+            }
+        }
     }
 }
 
 extension Logger: Logging {
+    public var minLevel: LogLevel { .debug }
+    
     public func log(logInfo: LogInfo) {
         switch logInfo.logLevel {
         case .debug:
@@ -76,7 +93,4 @@ extension Logger: Logging {
             return self.error("\(logInfo.formattedMessage)")
         }
     }
-
-    private static let subsystem = Bundle.main.bundleIdentifier!
-    public static let main = Logger(subsystem: subsystem, category: "main")
 }
