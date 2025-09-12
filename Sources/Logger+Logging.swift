@@ -11,42 +11,22 @@ extension Logger: Logging {
     public var minLevel: LogLevel { .debug }
     
     public func debug(_ message: String, category: String?) {
-        if let category {
-            self.debug("[\(category)] - \(message)")
-        } else {
-            self.debug("\(message)")
-        }
+        self.debug("[\(category == nil ? "" : category!)] \(message)")
     }
     
     public func info(_ message: String, category: String?) {
-        if let category {
-            self.info("[\(category)] - \(message)")
-        } else {
-            self.info("\(message)")
-        }
+        self.info("[\(category == nil ? "" : category!)] \(message)")
     }
     
     public func warning(_ message: String, category: String?) {
-        if let category {
-            self.warning("[\(category)] - \(message)")
-        } else {
-            self.warning("\(message)")
-        }
+        self.warning("[\(category == nil ? "" : category!)] \(message)")
     }
     
     public func error(_ message: String, category: String?) {
-        if let category {
-            self.error("[\(category)] - \(message)")
-        } else {
-            self.error("\(message)")
-        }
+        self.error("[\(category == nil ? "" : category!)] \(message)")
     }
     
     public func critical(_ message: String, category: String?) {
-        if let category {
-            self.critical("[\(category)] - \(message)")
-        } else {
-            self.critical("\(message)")
-        }
+        self.critical("[\(category == nil ? "" : category!)] \(message)")
     }
 }
