@@ -5,7 +5,7 @@
 //  Created by Daniel Fernandez Yopla on 12.09.2025.
 //
 
-public enum LogLevel: Int, Comparable {
+public enum LogLevel: Int, Comparable, Sendable {
     case debug = 0
     case info = 1
     case warning = 2
