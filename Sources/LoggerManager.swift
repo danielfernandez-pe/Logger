@@ -5,7 +5,7 @@
 //  Created by Daniel Fernandez Yopla on 12.09.2025.
 //
 
-public struct LoggerManager: Logging {
+public struct LoggerManager: Logging, Sendable {
     public var minLevel: LogLevel { .debug }
     
     private var loggers: [any Logging]
